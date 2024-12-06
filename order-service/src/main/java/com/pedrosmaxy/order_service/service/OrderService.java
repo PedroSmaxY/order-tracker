@@ -31,9 +31,9 @@ public class OrderService {
         order.setId(UUID.randomUUID());
         order.setUser(orderRequestDTO.user());
         order.setItems(orderRequestDTO.items());
+        order.setStatus(orderRequestDTO.status());
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());
-        order.setStatus(orderRequestDTO.status());
 
         kafkaTemplate.send("order-events", order.getId(), "CREATED");
 
@@ -50,6 +50,7 @@ public class OrderService {
     }
 
     public void deleteOrder(UUID id) {
-        orderRepository.deleteById(id);
+        var order = getOrderById(id);
+        orderRepository.deleteById(order.getId());
     }
 }

@@ -29,7 +29,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createOrder(OrderRequestDTO orderRequestDTO) {
+    public ResponseEntity<Void> createOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
         var newOrder = this.orderService.createOrder(orderRequestDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -41,7 +41,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable UUID id, OrderRequestDTO orderRequestDTO) {
+    public ResponseEntity<Order> updateOrder(@PathVariable UUID id, @RequestBody OrderRequestDTO orderRequestDTO) {
         return ResponseEntity.ok(this.orderService.updateOrder(id, orderRequestDTO));
     }
 
